@@ -26,24 +26,28 @@ void listenToEsp8266()
 {
   if (esp8266.available()) 
  {
-    static int dataCount = 0;
+    static int dataCount = -1;
     while(esp8266.available())
     {
         char buffChar = (char) esp8266.read();
         dataFromESP += buffChar;
     }
-    dataCount++;
-    Serial.print("data " + dataFromESP);
-    switch(dataCount % 3)
+    if(dataFromESP == "start" && dataCount % 4 != 0)
+        dataCount = 0; 
+    else
+        dataCount++;
+    Serial.println("data " + dataFromESP);
+    Serial.println(dataCount);
+    switch(dataCount % 4)
     {
         case 1:
           //myNextion.setComponentText("t1", "3.580.580");
           break;
         case 2:
-          myNextion.setComponentText("t1", dataFromESP);
-          break;
-        case 0:
           myNextion.setComponentText("t2", dataFromESP);
+          break;
+        case 3:
+          myNextion.setComponentText("t1", dataFromESP);
           break;
     }
     if (dataFromESP == "UNO")
