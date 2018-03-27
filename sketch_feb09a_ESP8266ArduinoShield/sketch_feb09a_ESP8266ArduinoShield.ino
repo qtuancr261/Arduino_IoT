@@ -56,17 +56,24 @@ void getBitcoinInformation(String APIUrl)
   data = replyFromServer.substring(jsonIndex);
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.parseObject(data);
+  // Notify arduino
+  Serial.print("start");
+  delay(1000);
   // Get time updated
   String time = root["results"]["time"]["time_update"];
-  Serial.println(time);
+  Serial.print(time);
   delay(1000);
   // Get USD rate
   String usdRate = root["results"]["bpi"]["USD"]["rate"];
-  Serial.println(usdRate +"$");
+  double usd = root["results"]["bpi"]["USD"]["rate_float"];
+  Serial.print(usdRate +"$");
+  //Serial.println(usd);
   delay(1000);
   // Get VN rate
   String vnRate = root["results"]["bpi"]["VND"]["rate"];
-  Serial.println(vnRate);
+  double vnd = root["results"]["bpi"]["VND"]["rate_float"];
+  Serial.print(vnRate);
+  //Serial.println(vnd);
   delay(1000);
 }
 //------------------------------------------------------------------------------
