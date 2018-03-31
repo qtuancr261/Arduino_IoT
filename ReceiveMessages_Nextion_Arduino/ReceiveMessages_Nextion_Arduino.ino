@@ -32,7 +32,7 @@ void listenToEsp8266()
         char buffChar = (char) esp8266.read();
         dataFromESP += buffChar;
     }
-    if(dataFromESP == "start" && dataCount % 4 != 0)
+    if(dataFromESP == "start")
         dataCount = 0; 
     else
         dataCount++;
@@ -41,7 +41,7 @@ void listenToEsp8266()
     switch(dataCount % 4)
     {
         case 1:
-          //myNextion.setComponentText("t1", "3.580.580");
+          myNextion.setComponentText("g2", dataFromESP);
           break;
         case 2:
           myNextion.setComponentText("t2", dataFromESP);
@@ -50,12 +50,7 @@ void listenToEsp8266()
           myNextion.setComponentText("t1", dataFromESP);
           break;
     }
-    if (dataFromESP == "UNO")
-    {
-        myNextion.setComponentText("t1", "3.580.580");
-        myNextion.setComponentText("t2", "17.000,05");
-    }
-        
+    // clear    
     dataFromESP = "";
  }
 }
